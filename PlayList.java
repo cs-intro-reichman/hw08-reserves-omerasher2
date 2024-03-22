@@ -57,7 +57,7 @@ class PlayList {
 
     /** Removes the last track from this list. If the list is empty, does nothing. */
      public void removeLast() {
-        if (size>0){
+        if (this.size>0){
             tracks[size-1] = null;
             size--;
         }
@@ -76,7 +76,9 @@ class PlayList {
     public int indexOf(String title) {
         for (int i=0; i<size; i++){
             String temp = tracks[i].getTitle();
-            if (title.equals(temp)) return i;
+            if (title.equals(temp)){ 
+                return i;
+            }
         }
         return -1;
     }
@@ -88,7 +90,8 @@ class PlayList {
      *  is full, does nothing and returns false. Otherwise, inserts the track and
      *  returns true. */
     public boolean add(int i, Track track) {
-        if (i<0 || i>maxSize || maxSize == size) return false;
+        if (i<0 || i>maxSize || maxSize == size) 
+            return false;
         for (int k = size; k > i; k--)
         {
             tracks [k] = tracks [size -1];
@@ -103,33 +106,35 @@ class PlayList {
      *  does nothing and returns -1. */
     public void remove(int i) {
         //// replace this comment with your code
-        if (maxSize!= size && i>=0 && i<size)
-            tracks[i] = null;
+        if (size != maxSize && i >= 0 && i<size){
+            for (int k = i; k < size; k++){
+                tracks [k] = tracks [k + 1];
+            }
+        size--;
+        }
     }
 
     /** Removes the first track that has the given title from this list.
      *  If such a track is not found, or the list is empty, or the given index
      *  is negative or too big for this list, does nothing. */
     public void remove(String title) {
-        if (size != 0){
-        for (int i=0; i<size; i++){
-            String temp = tracks[i].getTitle();
-            if (temp.equals(title)){
-                tracks[i] = null;
-                size--;
-                break;
-            }
-        }
-     }
+        //// replace this comment with your code
+        if(size > 0) {
+            for (int i = 0; i < size; i++)
+            {
+                if (tracks[i].getTitle().equals(title))
+                 this.remove(i);
+            }  
+         }
     }
 
     /** Removes the first track from this list. If the list is empty, does nothing. */
     public void removeFirst() {
-        //// replace this comment with your code
-        if (size != 0){
-            tracks[0] = null;
-            size--;
+        if (tracks.length > 0)
+        {
+            this.remove(0);
         }
+        //// replace this comment with your code
     }
     
     /** Adds all the tracks in the other list to the end of this list. 
